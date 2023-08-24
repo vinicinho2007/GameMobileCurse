@@ -13,6 +13,15 @@ public class PlayerController : MonoBehaviour
     public float speed;
     private bool _run;
 
+    [Header("PowerUp")]
+    private float _currentSpeed;
+    private bool _invencible;
+
+    private void Start()
+    {
+        _currentSpeed = speed;
+    }
+
     private void Update()
     {
         if (!_run) { return; }
@@ -29,8 +38,15 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            _run = false;
-            GameObject.FindObjectOfType<GameManager>().EndGame();
+            if (!_invencible)
+            {
+                _run = false;
+                GameObject.FindObjectOfType<GameManager>().EndGame();
+            }
+            else
+            {
+                Destroy(collision.gameObject);
+            }
         }
 
         if (collision.gameObject.CompareTag("End"))
@@ -43,5 +59,20 @@ public class PlayerController : MonoBehaviour
     public void StartGame()
     {
         _run = true;
+    }
+
+    public void PowerUpSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
+
+    public void ResetPowerUpSpeed()
+    {
+        speed = _currentSpeed;
+    }
+
+    public void SetPowerUpInvencible(bool setInvencible)
+    {
+        _invencible = setInvencible;
     }
 }
