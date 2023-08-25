@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour
     private float _currentSpeed;
     private bool _invencible;
 
+    [Header("Animation")]
+    public AnimationBase animationBase;
+    public SOStringAnim run, death, victory;
+
     private void Start()
     {
         _currentSpeed = speed;
@@ -24,8 +28,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (!_run) { return; }
+        if (!_run) { animationBase.AnimBool(false, run); return; }
 
+        animationBase.AnimBool(true,run);
         _pos = target.position;
         _pos.y = transform.position.y;
         _pos.z = transform.position.z;
@@ -36,10 +41,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        var t = transform.position;
         if (collision.gameObject.CompareTag("Enemy"))
         {
             if (!_invencible)
             {
+                t.z -= 1f;
+                animationBase.AnimTrigger(death);
                 _run = false;
                 GameObject.FindObjectOfType<GameManager>().EndGame();
             }
@@ -48,12 +56,14 @@ public class PlayerController : MonoBehaviour
                 Destroy(collision.gameObject);
             }
         }
-
         if (collision.gameObject.CompareTag("End"))
         {
+            t.z -= 1f;
+            animationBase.AnimTrigger(victory);
             _run = false;
             GameObject.FindObjectOfType<GameManager>().EndGame();
         }
+        transform.position = t;
     }
 
     public void StartGame()
@@ -63,11 +73,13 @@ public class PlayerController : MonoBehaviour
 
     public void PowerUpSpeed(float newSpeed)
     {
+        animationBase.AnimSpeed(1.5f);
         speed = newSpeed;
     }
 
     public void ResetPowerUpSpeed()
     {
+        animationBase.AnimSpeed(1.2f);
         speed = _currentSpeed;
     }
 
