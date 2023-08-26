@@ -5,6 +5,7 @@ using UnityEngine;
 public class PowerUpBase : MonoBehaviour
 {
     [Header("PowerUp Base")]
+    public PowerUpImgsTaypes type;
     public GameObject imgPowerUp;
     public float duration;
     public PlayerController playerController;
@@ -12,6 +13,16 @@ public class PowerUpBase : MonoBehaviour
     private void Start()
     {
         if(playerController == null) { playerController = GameObject.FindObjectOfType<PlayerController>(); }
+        if(imgPowerUp == null) {
+            PowerUpImgs powerUp = GameObject.FindObjectOfType<PowerUpImgs>();
+            foreach(GameObjectsImgsPowerUps obj in powerUp.powerUpObjs)
+            {
+                if (obj.type == type)
+                {
+                    imgPowerUp = obj.obj;
+                }
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
