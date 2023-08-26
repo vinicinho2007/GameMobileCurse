@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d804f07f3b58bfd4d917c15686822988, type: 3}
+  m_Name: Level 03
+  m_EditorClassIdentifier: 
+  typeArt: 2
+  placesStart:
+  - {fileID: 3094343176397820522, guid: d80669be5fc34ac48ab5545ec86db275, type: 3}
+  places:
+  - {fileID: 6014972303359751925, guid: 62cc5c0bc373e484f8986ce9242d84d0, type: 3}
+  - {fileID: 6719188332716813590, guid: b6d994e40e6043541801d9e3a1f1d0f3, type: 3}
+  - {fileID: 4116501683128901403, guid: 3e33cb6da1d925f4f9164391fe2d7659, type: 3}
+  - {fileID: 4090908871387519194, guid: 3df9c77d636d5f54294406bd7f7a4ecb, type: 3}
+  - {fileID: 6436976439617731041, guid: 5a70ca7477f7bcc498f4a1c411d2447f, type: 3}
+  - {fileID: 2203518220954153551, guid: 86f5685f00d28b74792bccdc8e35d1af, type: 3}
+  placesEnd:
+  - {fileID: 6924994958371011935, guid: 3c2d8be167f65854a8ee5d5bdd79c0d0, type: 3}
+  maxPlacesStart: 1
+  maxPlaces: 8
+  maxPlacesEnd: 1
