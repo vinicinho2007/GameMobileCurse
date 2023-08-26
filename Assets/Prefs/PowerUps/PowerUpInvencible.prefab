@@ -110,4 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f5d0b2ca70f39345be4e4eecdd39068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 2
+  imgPowerUp: {fileID: 0}
   duration: 5
+  playerController: {fileID: 0}

@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a1f30f347478d4cbd11f36747e9f64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameObjImgPowerUp: PowerUpCoin
   imgPowerUp: {fileID: 0}
   duration: 1
   playerController: {fileID: 0}
