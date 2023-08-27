@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 _pos;
 
     [Header("Player")]
+    public Vector2 limitArea;
     public Rigidbody rig;
     public float speed;
     public float jumpSpeed;
@@ -29,6 +30,9 @@ public class PlayerController : MonoBehaviour
     [Header("Animation Collect")]
     public BounceHelper bounceHelper;
 
+    [Header("Enemy")]
+    public ParticleSystem particleSystemEnemy;
+
     private void Start()
     {
         _currentSpeed = speed;
@@ -42,6 +46,9 @@ public class PlayerController : MonoBehaviour
         _pos = target.position;
         _pos.y = transform.position.y;
         _pos.z = transform.position.z;
+
+        if (_pos.x < limitArea.x) { _pos.x = limitArea.x; }
+        else if (_pos.x > limitArea.y) { _pos.x = limitArea.y; }
 
         transform.position = Vector3.Lerp(transform.position, _pos, delayLerp);
         transform.Translate(transform.forward * speed * Time.deltaTime);
@@ -74,28 +81,33 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        var t = transform.position;
         if (collision.gameObject.CompareTag("Enemy"))
         {
             if (!_invencible)
             {
-                t.z -= 1f;
-                animationBase.AnimTrigger(death);
-                _run = false;
-                GameObject.FindObjectOfType<GameManager>().EndGame();
+                StopGameColidiu(death);
+                GameObject.FindObjectOfType<GameManager>().DeathParticleSystem();
             }
             else
             {
+                GameObject obj = Instantiate(particleSystemEnemy.gameObject, collision.gameObject.transform.position,particleSystemEnemy.transform.rotation);
+                obj.transform.SetParent(null);
                 Destroy(collision.gameObject);
             }
         }
         if (collision.gameObject.CompareTag("End"))
         {
-            t.z -= 1f;
-            animationBase.AnimTrigger(victory);
-            _run = false;
-            GameObject.FindObjectOfType<GameManager>().EndGame();
+            StopGameColidiu(victory);
         }
+    }
+
+    public void StopGameColidiu(SOStringAnim anim)
+    {
+        var t = transform.position;
+        t.z -= 1f;
+        animationBase.AnimTrigger(anim);
+        _run = false;
+        GameObject.FindObjectOfType<GameManager>().EndGame();
         transform.position = t;
     }
 

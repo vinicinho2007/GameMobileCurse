@@ -36,7 +36,6 @@ public class MovementObjs : MonoBehaviour
                 time += Time.deltaTime;
                 yield return null;
             }
-
             time = 0;
             yield return null;
         }

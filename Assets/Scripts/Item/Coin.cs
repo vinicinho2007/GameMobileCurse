@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    public ParticleSystem particleSystemCoin;
     public float lerp;
     public SOInt coins;
     private bool _collect;
@@ -17,6 +18,8 @@ public class Coin : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            particleSystemCoin.transform.SetParent(null);
+            particleSystemCoin.Play();
             GameObject.FindObjectOfType<PlayerController>().Bounce();
             Destroy();
         }

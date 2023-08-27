@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public GameObject[] objsFalses;
     public GameObject endGame;
+    public Transform gerateParticleSystemDeath;
+    public ParticleSystem particleSystemDeath;
     public SOInt coins;
 
     private void Start()
@@ -17,5 +19,10 @@ public class GameManager : MonoBehaviour
     {
         foreach(GameObject obj in objsFalses) { obj.SetActive(false); }
         endGame.SetActive(true);
+    }
+
+    public void DeathParticleSystem()
+    {
+        Instantiate(particleSystemDeath.gameObject, gerateParticleSystemDeath);
     }
 }
