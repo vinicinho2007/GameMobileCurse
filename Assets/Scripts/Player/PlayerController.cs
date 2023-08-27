@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,16 +11,23 @@ public class PlayerController : MonoBehaviour
     private Vector3 _pos;
 
     [Header("Player")]
+    public Rigidbody rig;
     public float speed;
-    private bool _run;
+    public float jumpSpeed;
+    private bool _run, _jump;
 
     [Header("PowerUp")]
     private float _currentSpeed;
     private bool _invencible;
 
     [Header("Animation")]
+    public Ease ease;
+    public float durationAnim;
     public AnimationBase animationBase;
-    public SOStringAnim run, death, victory;
+    public SOStringAnim run, death, victory, jump;
+
+    [Header("Animation Collect")]
+    public BounceHelper bounceHelper;
 
     private void Start()
     {
@@ -37,6 +45,31 @@ public class PlayerController : MonoBehaviour
 
         transform.position = Vector3.Lerp(transform.position, _pos, delayLerp);
         transform.Translate(transform.forward * speed * Time.deltaTime);
+    }
+
+    public void Bounce()
+    {
+        if (bounceHelper!=null)
+        {
+            bounceHelper.Bounce();
+        }
+    }
+
+    public void Jump()
+    {
+        if (!_jump)
+        {
+            animationBase.AnimTrigger(jump);
+            rig.useGravity = true;
+            rig.AddForce(transform.up*jumpSpeed, ForceMode.Impulse);
+            _jump = true;
+        }
+    }
+
+    public void StopJump()
+    {
+        transform.position = new Vector3(transform.position.x, -.5f, transform.position.z);
+        _jump = false;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -68,7 +101,9 @@ public class PlayerController : MonoBehaviour
 
     public void StartGame()
     {
+        transform.localScale = Vector3.zero;
         _run = true;
+        transform.DOScale(1, durationAnim).SetEase(ease);
     }
 
     public void PowerUpSpeed(float newSpeed)
@@ -85,6 +120,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetPowerUpInvencible(bool setInvencible)
     {
+        transform.position = new Vector3(transform.position.x, -.5f, transform.position.z);
         _invencible = setInvencible;
     }
 }
