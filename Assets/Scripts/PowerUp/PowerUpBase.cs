@@ -29,6 +29,7 @@ public class PowerUpBase : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            playerController.Bounce();
             gameObject.SetActive(false);
             StartPowerUp();
         }

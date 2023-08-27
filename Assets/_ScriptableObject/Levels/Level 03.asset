@@ -24,6 +24,6 @@ MonoBehaviour:
   - {fileID: 2203518220954153551, guid: 86f5685f00d28b74792bccdc8e35d1af, type: 3}
   placesEnd:
   - {fileID: 6924994958371011935, guid: 3c2d8be167f65854a8ee5d5bdd79c0d0, type: 3}
-  maxPlacesStart: 1
+  maxPlacesStart: 2
   maxPlaces: 8
   maxPlacesEnd: 1
