@@ -8,10 +8,16 @@ public class Coin : MonoBehaviour
     public SOInt coins;
     private bool _collect;
 
+    private void Start()
+    {
+        GameObject.FindObjectOfType<CoinAnimManager>().AddCoin(this);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            GameObject.FindObjectOfType<PlayerController>().Bounce();
             Destroy();
         }
     }

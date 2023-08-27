@@ -1,17 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class LevelManager : MonoBehaviour
 {
+    public ColorChange colorChange;
     public ArtManager artManager;
     public Transform target;
     public LevelPlacesBaseSetup[] baseSetupsLevels;
     private List<LevelPlacesBase> _spawnPlaces;
     private int _index;
 
+    [Header("Animation")]
+    public Ease ease;
+    public float duarationAnimScale, delayScale;
+    private CoinAnimManager _coinAnimation;
+
     private void Start()
     {
+        _coinAnimation = GameObject.FindObjectOfType<CoinAnimManager>();
         _spawnPlaces = new List<LevelPlacesBase>();
         NextLevel();
     }
@@ -38,6 +46,7 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(_spawnPlaces[i].gameObject);
         }
+        _coinAnimation.coins= new List<Coin>();
         _spawnPlaces = new List<LevelPlacesBase>();
     }
 
@@ -57,6 +66,25 @@ public class LevelManager : MonoBehaviour
         }
 
         GameObject.FindObjectOfType<ColorManager>().EditColors(baseSetup.typeArt);
+        StartCoroutine(ScalePlaceCoroutine());
+        _coinAnimation.StartCoroutine(_coinAnimation.AnimCoinsCoroutine());
+        //colorChange.LerpColor();
+    }
+
+    IEnumerator ScalePlaceCoroutine()
+    {
+        foreach(var p in _spawnPlaces)
+        {
+            p.transform.localScale = Vector3.zero;
+        }
+
+        yield return null;
+
+        for(int i = 0; i < _spawnPlaces.Count; i++)
+        {
+            _spawnPlaces[i].transform.DOScale(1, duarationAnimScale).SetEase(ease);
+            yield return new WaitForSeconds(delayScale);
+        }
     }
 
     private void CreatePlaces(LevelPlacesBase[] placesBases, LevelPlacesBaseSetup setup)

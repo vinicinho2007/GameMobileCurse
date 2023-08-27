@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject[] objsFalses;
     public GameObject endGame;
     public SOInt coins;
 
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
+        foreach(GameObject obj in objsFalses) { obj.SetActive(false); }
         endGame.SetActive(true);
     }
 }
